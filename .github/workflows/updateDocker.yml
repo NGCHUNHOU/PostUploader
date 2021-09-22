@@ -1,6 +1,0 @@
-- name: Docker README update
-  uses: NGCHUNHOU/SocBot
-  with:
-    username: ${{ secrets.DOCKERHUB_USERNAME }}
-    password: ${{ secrets.DOCKERHUB_PASSWORD }}
-    repository: chunhou5741/socbot
