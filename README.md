@@ -23,3 +23,8 @@ $ python3 main.py
 // Headless run
 $ MOZ_HEADLESS=1 python3 main.py
 ```
+
+# Docker Image 
+```
+$ docker run -p 6000:80 -dit chunhou5741/socbot
+```
