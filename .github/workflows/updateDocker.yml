@@ -1,6 +1,6 @@
-- name: Docker Hub Description
-      uses: NGCHUNHOU/SocBot
-      env:
-        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-        DOCKERHUB_REPOSITORY: chunhou5741/socbot
+- name: Docker README update
+    uses: ngchunhou/SocBot
+    with:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      repository: chunhou5741/socbot
