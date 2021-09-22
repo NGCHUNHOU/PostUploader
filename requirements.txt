@@ -1,0 +1,3 @@
+cryptography==2.8
+selenium==3.141.0
+autoit==0.2.3

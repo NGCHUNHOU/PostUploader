@@ -1,0 +1,59 @@
+{
+    "website": "https://www.facebook.com",
+    "instasite": "https://www.instagram.com",
+    "twtsite": "https://www.twitter.com",
+    "markupdataset": [["#email", "#pass"],
+    ["userfbemail", "userfbpassword"] ],
+    "instaMobileLoginBtnxpath": "//*[contains(text(), 'Log In')]",
+    "instaDisLoginBtnxpath": "button[disabled]",
+    "instaMarkupDataset": [
+        ["input[aria-label='Phone number, username, or email']", "input[aria-label='Password']"],
+        ["userinstamail", "userinstapassword"]
+    ],
+    "twtloginPath": "login",
+    "twtmail": "usertwittermail",
+    "twtpass": "usertwitterpassword",
+    "twtid": "usertwitterid",
+    "twtpassele": "//*[contains(text(), 'Password')]",
+    "twtmediainputele": "input[data-testid='fileInput']",
+    "twttextblock": "//*[contains(text(), 'happening')]",
+    "instapostbtn": "svg[aria-label='New Post']",
+    "instanextbtn": "//*[contains(text(), 'Next')]",
+    "instasharebtn": "//button[contains(text(), 'Share')]",
+    "instacaption": "//textarea[contains(concat(' ', @aria-label, ' '), 'Write a caption')]",
+    "accid": "userfbid",
+    "instaid": "userinstaid",
+    "fbpostelexpath": "//*[contains(text(), 'on your mind?')]",
+    "fbpostbtnxpath": "/html/body/div[1]/div/div[1]/div/div[4]/div/div[2]/div[1]/div/div[2]/div/div/div/form/div/div[1]/div/div/div/div[3]/div[2]",
+    "fbimageinput": "input[accept='image/*,image/heif,image/heic,video/*,video/mp4,video/x-m4v,video/x-matroska,.mkv']:nth-child(2)",
+    "sleepinterval": 10,
+    "steptopostbtn": 10,
+    "datetimeformat": "%D %H:%M:%S",
+    "fbpostdataset": [
+        {
+            "postcontent": "userfbpostcontent",
+            "mediapath": "user/path/to/media",
+            "schedule": "userschedule example 09/18/21 18:04:00"
+        }
+    ],
+    "instabtns":[
+        "//*[contains(text(), 'Next')]",
+        "//textarea[contains(concat(' ', @aria-label, ' '), 'Write a caption')]", 
+        "//button[contains(text(), 'Share')]"
+    ],
+    "instaisclicktype": [true, false, true],
+    "instapostdataset": [
+        {
+            "postcontent": "userinstapostcontent",
+            "mediapath": "user/path/to/media",
+            "schedule": "userschedule example 09/18/21 18:04:00"
+        }
+    ],
+    "twtpostdataset": [
+        {
+            "postcontent": "usertwitterpostcontent",
+            "mediapath": "user/path/to/media",
+            "schedule": "userschedule example 09/18/21 18:04:00"
+        }
+    ]
+}
