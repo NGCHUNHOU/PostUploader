@@ -21,3 +21,11 @@ class base:
             actiondict["action"+str(inputnum)]=ActionChains(self.driver)
             actiondict["action"+str(inputnum)].send_keys(inputlist[inputnum])
             actiondict["action"+str(inputnum)].perform()
+    def sortpostschedule(self, postlist):
+        for i in range(0, len(postlist)):
+            for j in range(i+1, len(postlist)):
+                if (postlist[i]["schedule"]>postlist[j]["schedule"]):
+                    temp=postlist[i]
+                    postlist[i]=postlist[j]
+                    postlist[j]=temp
+        return postlist       

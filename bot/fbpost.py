@@ -4,6 +4,7 @@ from selenium.webdriver.common import keys
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+import asyncio
 from .base import *
 
 class fbpost(base):
@@ -22,40 +23,47 @@ class fbpost(base):
             # action.perform()
             self.customactions((Keys.ENTER))
         time.sleep(self.userdata["sleepinterval"])
-    def handlepostcontent(self, fblist:list):
+    async def handlepostcontent(self, fblist:list):
         time.sleep(self.userdata["sleepinterval"])
         # for data in dataset["fbpostdataset"]:
         currdtime=time.strftime(self.userdata["datetimeformat"], time.localtime())
         while (currdtime<fblist["schedule"]):
-            time.sleep(1)
+            await asyncio.sleep(1)
             currdtime=time.strftime(self.userdata["datetimeformat"], time.localtime())
-
+        dialog=1
+        try:
+            self.driver.find_element_by_css_selector("div[role='dialog']")
+        except:
+            dialog=0
         swt=1
-        if (swt):
-            if (fblist["mediapath"] != ""):
-                # "fbimagebtn": "div[aria-label='Photo/Video']",
-                imagebtn=self.driver.find_element_by_css_selector(self.userdata["fbimageinput"])
-                imagebtn.send_keys(fblist["mediapath"])
+        if (swt and dialog and fblist["mediapath"] != ""):
+            # "fbimagebtn": "div[aria-label='Photo/Video']",
+            imagebtn=self.driver.find_element_by_css_selector(self.userdata["fbimageinput"])
+            imagebtn.send_keys(fblist["mediapath"])
+            tabnum=self.userdata["steptopostbtn"]+1
+            pass
+        else:
+            print("the post has not image")
+            if "http" in fblist["postcontent"]:
                 tabnum=self.userdata["steptopostbtn"]+1
                 pass
-            else:
-                print("the post has not image")
+            else: 
                 tabnum=self.userdata["steptopostbtn"]
-                pass
+        if (swt and dialog):
             time.sleep(self.userdata["sleepinterval"])
-            # action = ActionChains(self.driver)
-            # action.send_keys(fblist["postcontent"])
-            # action.perform()
             self.customactions((fblist["postcontent"]))
             time.sleep(self.userdata["sleepinterval"]/2)
-            # action2 = ActionChains(self.driver)
-            # action2.send_keys(Keys.TAB*tabnum)
-            # action2.perform()
             self.customactions((Keys.TAB*tabnum))
             time.sleep(self.userdata["sleepinterval"]/2)
-            # action3 = ActionChains(self.driver)
-            # action3.send_keys(Keys.ENTER)
-            # action3.perform()
+            self.customactions((Keys.ENTER))
+        else:
+            ele=self.driver.find_element_by_xpath(self.userdata["fbpostelexpath"])
+            ele.click()
+            time.sleep(self.userdata["sleepinterval"])
+            self.customactions((fblist["postcontent"]))
+            time.sleep(self.userdata["sleepinterval"]/2)
+            self.customactions((Keys.TAB*tabnum))
+            time.sleep(self.userdata["sleepinterval"]/2)
             self.customactions((Keys.ENTER))
 
         # action2 = ActionChains(self.driver)
@@ -70,15 +78,16 @@ class fbpost(base):
         # action2.perform
 
     # def keyinpost(self, accid, fbpostele, fbpostbtn):
-    def keyinpost(self, accid, fbpostdata:dict):
+    async def keyinpost(self, accid, fbpostdata:dict):
         print("get to user profile page")
         self.driver.get(self.userdata["website"]+"/"+accid)
         time.sleep(self.userdata["sleepinterval"]/2)
         ele=self.driver.find_element_by_xpath(fbpostdata["fbpostelexpath"])
         ele.click()
-        for data in fbpostdata["fbpostdataset"]:
+        sortedpostlist=self.sortpostschedule(fbpostdata["fbpostdataset"])
+        for data in sortedpostlist:
             print("pending to create post content")
-            self.handlepostcontent(data)
+            await self.handlepostcontent(data)
         # action = ActionChains(self.driver)
         # action.send_keys("testing")
         # action.perform()

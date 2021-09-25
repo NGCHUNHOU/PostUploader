@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 from .base import *
+import asyncio
 
 class twtpost(base):
     def __init__(self, userdata):
@@ -43,14 +44,15 @@ class twtpost(base):
             # action2.send_keys(password+Keys.ENTER)
             # action2.perform()
             self.customactions((password+Keys.ENTER))
-    def createpost(self, twtdataset):
+    async def createpost(self, twtdataset):
         print("get to user profile page")
         time.sleep(self.userdata["sleepinterval"]/2)
-        for twtdata in twtdataset:
+        sortedpostdata=self.sortpostschedule(twtdataset["twtpostdataset"])
+        for twtdata in sortedpostdata:
             time.sleep(self.userdata["sleepinterval"]/2)
             currdtime=time.strftime(self.userdata["datetimeformat"], time.localtime())
             while (currdtime<twtdata["schedule"]):
-                time.sleep(1)
+                await asyncio.sleep(1)
                 currdtime=time.strftime(self.userdata["datetimeformat"], time.localtime())
             swt=1
             if (swt):

@@ -1,3 +1,4 @@
+import asyncio
 from .base import *
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -42,20 +43,23 @@ class inspost(base):
             action.perform()
             # self.customactions((Keys.ENTER))
         time.sleep(self.userdata["sleepinterval"]/2)
-    def createpost(self, accid, postdata):
+    async def createpost(self, accid, postdata):
         print("get to user profile page")
         self.instadriver.get(self.site+"/"+accid)
         time.sleep(self.userdata["sleepinterval"]/2)
         currdtime=time.strftime(self.userdata["datetimeformat"], time.localtime())
-        for post in postdata["instapostdataset"]:
+        sortedpostdata=self.sortpostschedule(postdata["instapostdataset"])
+        for post in sortedpostdata:
             while(currdtime<post["schedule"]):
-                time.sleep(1)
+                await asyncio.sleep(1)
                 currdtime=time.strftime(self.userdata["datetimeformat"], time.localtime())
 
             time.sleep(self.userdata["sleepinterval"]*2)
             postbtn=self.instadriver.find_element_by_css_selector(postdata["instapostbtn"])
             postbtn.click()
             # os.system("xdotool key ctrl+l && xdotool type "+postdata["instapostdataset"][0]+" && xdotool key KP_Enter")
+            if (post["mediapath"] == ""):
+                raise Exception("image is required for uploading instagram post")
             os.system("xdotool key ctrl+l && xdotool type "+post["mediapath"]+" && xdotool key KP_Enter")
             # time.sleep(self.userdata["sleepinterval"]/2)
             # next=self.instadriver.find_element_by_xpath(postdata["instanextbtn"])
