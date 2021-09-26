@@ -60,8 +60,9 @@ class inspost(base):
             # os.system("xdotool key ctrl+l && xdotool type "+postdata["instapostdataset"][0]+" && xdotool key KP_Enter")
             if (post["mediapath"] == ""):
                 raise Exception("image is required for uploading instagram post")
-            os.system("xdotool key ctrl+l && xdotool type "+post["mediapath"]+" && xdotool key KP_Enter")
-            # time.sleep(self.userdata["sleepinterval"]/2)
+            os.system("xdotool search 'File Upload' && "+"xdotool key ctrl+l && xdotool type "+post["mediapath"])
+            time.sleep(self.userdata["sleepinterval"]/2)
+            os.system("xdotool key KP_Enter")
             # next=self.instadriver.find_element_by_xpath(postdata["instanextbtn"])
             # next.click()
             # time.sleep(self.userdata["sleepinterval"]/2)
